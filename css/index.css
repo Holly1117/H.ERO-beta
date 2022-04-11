@@ -45,11 +45,14 @@ h1 {
 
 .radioLabel {
     display: inline-block;
-    padding: 7px;
+    padding: 10px;
     margin-right: 18px;
+    margin-bottom: 10px;
+    margin-bottom: 10px;
     border-radius: 2px;
     font-size: 0.9em;
     transition: all .1s;
+    font-family:"UD デジタル 教科書体 NK-B";
 }
 
 .radioLabel:hover {
