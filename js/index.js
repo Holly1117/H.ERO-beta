@@ -1,5 +1,5 @@
 window.onload = function () {
-    setYoutube();
+    //setYoutube();
     setMenu();
     setCard(null, null, true);
 }
@@ -32,8 +32,17 @@ function setCard(year, month, flag) {
             let dateYear = data[i].menu_date_year
             let dateMonth = data[i].menu_date_month
             if (flag || (dateYear == year && dateMonth == month)) {
-                console.log("./image/game/" + data[i].game_image);
-                $("#cardList").append("<div class=\"cardItem\"><img class=\"cardImage jsModalVideo\" src=\"./image/game/" + data[i].game_image + ".webp\" alt=\"" + data[i].game_name + "\" data-video-id=\"" + data[i].game_youtube + "\"title=\"" + data[i].game_name + "\" onerror=\"this.onerror = null; this.src='https://placehold.jp/300x180.png';\"><p class=\"cardTitle\"><a href=\"" + data[i].game_url + "\" target=\"_blank\" rel=\"noopener noreferrer\" title=\"" + data[i].game_name + "\">" + data[i].game_name + "</a></p><div class=\"cardContentArea\"><div class=\"cardBrand\"><a href=\"" + data[i].brand_url + "\" target=\"_blank\" rel=\"noopener noreferrer\">" + data[i].brand_name + "</a></div><div class=\"cardDate\">" + data[i].game_date + "</div></div></div>");
+                let kindsLogo = "";
+                if (data[i].game_kinds == "(NS)") {
+                    kindsLogo = "<img class=\"hardLogo\" src=\"./image/logo/ns-logo.png\">";
+                } else if (data[i].game_kinds == "(PS4)") {
+                    kindsLogo = "<img class=\"hardLogo\" src=\"./image/logo/ps-logo.png\">";
+                } else if (data[i].game_kinds == "(XBO)") {
+                    kindsLogo = "<img class=\"hardLogo\" src=\"./image/logo/xbox-logo.svg\">";
+                }
+                //data-video-id=\"" + data[i].game_youtube + "\"
+                $("#cardList").append("<div class=\"cardItem\"><a href=\"" + data[i].game_url + "\" target=\"_blank\" rel=\"noopener noreferrer\"><img class=\"cardImage jsModalVideo\" src=\"./image/game/" + data[i].game_image + ".png\" alt=\"" + data[i].game_name + "\" title=\"" + data[i].game_name + "\" onerror=\"this.onerror = null; this.src='https://placehold.jp/300x180.png';\">"+kindsLogo+"</a><p class=\"cardTitle\"><a href=\"" + data[i].game_url + "\" target=\"_blank\" rel=\"noopener noreferrer\" title=\"" + data[i].game_name + "\">" + data[i].game_name + "</a></p><div class=\"cardContentArea\"><div class=\"cardBrand\"><a href=\"" + data[i].brand_url + "\" target=\"_blank\" rel=\"noopener noreferrer\">" + data[i].brand_name + "</a></div><div class=\"cardDate\">" + data[i].game_date + "</div></div></div>");
+
             }
         }
     });

@@ -4,16 +4,15 @@ import re
 import json
 import codecs
 
-HERO_FILE_PATH = 'hero.json'
+HERO_FILE_PATH = './json/hero.json'
 
-CALENDAR_FILE_PATH = 'calendar.json'
+CALENDAR_FILE_PATH = './json/calendar.json'
 
 CONTEXT_URL = 'https://erogamescape.dyndns.org/~ap2/ero/toukei_kaiseki/before_hatubai_yotei.php?erogame=&model='
 
 DETAIL_URL = 'https://erogamescape.dyndns.org/~ap2/ero/toukei_kaiseki/'
 
-REQUEST_HTML = requests.get(CONTEXT_URL).text.replace(
-    '\n', '').replace('\t', '').replace(' ', '')
+REQUEST_HTML = requests.get(CONTEXT_URL).text.replace('\n', '').replace('\t', '').replace(' ', '')
 
 KINDS_NAME = ['(PS4)', '(PS5)', '(NS)', '(XBO)']
 
@@ -56,6 +55,8 @@ KINDS_LIST = []
 DETAIL_LIST = []
 
 BRAND_DETAIL_LIST = []
+
+
 
 
 def get_title():
@@ -151,5 +152,18 @@ def parse_json(info_jsons, path):
     json.dump(info_jsons, codecs_open, ensure_ascii=False, indent=2)
     codecs_open.close()
 
-parse_json(set_hero(), HERO_FILE_PATH)
-parse_json(CALENDAR_LIST, CALENDAR_FILE_PATH)
+#parse_json(set_hero(), HERO_FILE_PATH)
+#parse_json(CALENDAR_LIST, CALENDAR_FILE_PATH)
+
+
+#JSONファイルの読み込み
+js_r=open('./json/hero.json','r',encoding="utf-8_sig")
+j_data=json.load(js_r )#データを取り出して、変数に入れています。
+print(j_data)
+js_r.close()
+#辞書型データの追加
+j_add={'1001':'True','1002':'True','1003':'False'}
+j_data.append(j_add)
+codecs_open = codecs.open('./json/hero.json', 'w', 'utf-8')
+json.dump(j_data, codecs_open, ensure_ascii=False, indent=2)
+codecs_open.close()
