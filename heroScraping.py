@@ -17,6 +17,8 @@ REQUEST_HTML = requests.get(CONTEXT_URL).text.replace(
 
 KINDS_NAME = ['(PS4)', '(PS5)', '(NS)', '(XBO)']
 
+IMAGE_NAME = 'HI00_'
+
 TITLE_PATTERN = r'<ahref="(game.+?)"class="tooltip.+?">(.+?)<.a>(.*?)<ahref'
 
 KINDS_PATTERN = r'<.*?>(.*?)<.*?>'
@@ -126,7 +128,7 @@ def set_hero():
             "game_name": title,
             "game_date": DATE_LIST[index],
             "game_url": URL_LIST[index],
-            "game_image": IMAGE_LIST[index],
+            "game_image": IMAGE_NAME + str(index),
             "game_youtube": None,
             "game_kinds": KINDS_LIST[index],
             "brand_name": BRAND_LIST[index],
