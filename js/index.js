@@ -7,13 +7,20 @@ window.onload = function () {
 function setMenu() {
 
     $.getJSON("./json/calendar.json", function (dataList) {
-        for (var i in dataList) {
+        var $calendar = $("#calendarMenu");
+        var calendarMenuTag = [];
+        calendarMenuTag.push("<input id=\"menuAll\" class=\"radioInput filter\" type=\"radio\" name=\"calendarRadio\"/ checked=\"checked\">");
+        calendarMenuTag.push("<label class=\"radioLabel\" for=\"menuAll\">ALL</label>");
+        dataListLength = dataList.length;
+        for (let i = dataListLength - 1; i >= 0; i--) {
             let date_yyyy_mm = dataList[i].date_year + "-" + dataList[i].date_month;
-            $("#calendarMenu").prepend("<label class=\"radioLabel\" for=\"menu" + date_yyyy_mm + "\">" + dataList[i].date_year + "年" + dataList[i].date_month + "月" + "</label>");
-            $("#calendarMenu").prepend("<input onclick=\"setCardEvent(" + dataList[i].date_year + "," + dataList[i].date_month + ")\" id=\"menu" + date_yyyy_mm + "\" class=\"radioInput filter\" type=\"radio\" name=\"calendarRadio\"/>");
+            let setCardEventMethod = "setCardEvent(" + dataList[i].date_year + "," + dataList[i].date_month + ")";
+            let inputId = "menu" + date_yyyy_mm;
+            let menuName = dataList[i].date_year + "年" + dataList[i].date_month + "月";
+            calendarMenuTag.push("<input onclick=\"" + setCardEventMethod + "\" id=\"" + inputId + "\" class=\"radioInput filter\" type=\"radio\" name=\"calendarRadio\"/>");
+            calendarMenuTag.push("<label class=\"radioLabel\" for=\"" + inputId + "\">" + menuName + "</label>");
         }
-        $("#calendarMenu").prepend("<label class=\"radioLabel\" for=\"menuAll\">ALL</label>");
-        $("#calendarMenu").prepend("<input id=\"menuAll\" class=\"radioInput filter\" type=\"radio\" name=\"calendarRadio\"/ checked=\"checked\">");
+        $calendar[0].innerHTML = calendarMenuTag.join("");
         $("#menuAll").on("click", () => {
             $("#cardList").children().remove();
             setCard(null, null, true);
@@ -28,11 +35,14 @@ function setCardEvent(year, month) {
 
 function setCard(year, month, flag) {
     $.getJSON("./json/hero.json", function (data) {
+        var $carList = $("#cardList");
+        var cardListTag = [];
+
         for (var i in data) {
-            let dateYear = data[i].menu_date_year
-            let dateMonth = data[i].menu_date_month
+            var dateYear = data[i].menu_date_year;
+            var dateMonth = data[i].menu_date_month;
             if (flag || (dateYear == year && dateMonth == month)) {
-                let kindsLogo = "";
+                var kindsLogo = "";
                 if (data[i].game_kinds == "(NS)") {
                     kindsLogo = "<img class=\"hardLogo\" src=\"./image/logo/ns-logo.png\">";
                 } else if (data[i].game_kinds == "(PS4)") {
@@ -40,11 +50,20 @@ function setCard(year, month, flag) {
                 } else if (data[i].game_kinds == "(XBO)") {
                     kindsLogo = "<img class=\"hardLogo\" src=\"./image/logo/xbox-logo.svg\">";
                 }
-                //data-video-id=\"" + data[i].game_youtube + "\"
-                $("#cardList").append("<div class=\"cardItem\"><a href=\"" + data[i].game_url + "\" target=\"_blank\" rel=\"noopener noreferrer\"><img class=\"cardImage jsModalVideo\" src=\"./image/game/" + data[i].game_image + ".png\" alt=\"" + data[i].game_name + "\" title=\"" + data[i].game_name + "\" onerror=\"this.onerror = null; this.src='https://placehold.jp/300x180.png';\">"+kindsLogo+"</a><p class=\"cardTitle\"><a href=\"" + data[i].game_url + "\" target=\"_blank\" rel=\"noopener noreferrer\" title=\"" + data[i].game_name + "\">" + data[i].game_name + "</a></p><div class=\"cardContentArea\"><div class=\"cardBrand\"><a href=\"" + data[i].brand_url + "\" target=\"_blank\" rel=\"noopener noreferrer\">" + data[i].brand_name + "</a></div><div class=\"cardDate\">" + data[i].game_date + "</div></div></div>");
-
+                let youtubeTag = "data-video-id=\"" + data[i].game_youtube + "\"";
+                let imageSrc = "./image/game/" + data[i].game_image + ".png";
+                let imageTag = "<img class=\"cardImage jsModalVideo\" src=\"" + imageSrc + "\" title=\"" + data[i].game_name + "\" onerror=\"this.onerror = null; this.src='https://placehold.jp/300x180.png';\" loading=\"lazy\">" + kindsLogo;
+                let ImageLinkTag = "<a href=\"" + data[i].game_url + "\" target=\"_blank\" rel=\"noopener noreferrer\">" + imageTag + "</a>";
+                let aTag = "<a href=\"" + data[i].game_url + "\" target=\"_blank\" rel=\"noopener noreferrer\">" + data[i].game_name + "</a>";
+                let titleLinkTag = "<p class=\"cardTitle\">" + aTag + "</p>";
+                let brandTag = "<div class=\"cardBrand\"><a href=\"" + data[i].brand_url + "\" target=\"_blank\" rel=\"noopener noreferrer\">" + data[i].brand_name + "</a></div>";
+                let dateTag = "<div class=\"cardDate\">" + data[i].game_date + "</div>";
+                let contentAreaTag = "<div class=\"cardContentArea\">" + brandTag + dateTag + "</div>";
+                cardListTag.push("<div class=\"cardItem\">" + ImageLinkTag + titleLinkTag + contentAreaTag + "</div>");
             }
         }
+
+        $carList[0].innerHTML = cardListTag.join("");
     });
 }
 
