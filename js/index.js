@@ -44,15 +44,15 @@ function setCard(year, month, flag) {
             if (flag || (dateYear == year && dateMonth == month)) {
                 var kindsLogo = "";
                 if (data[i].game_kinds == "(NS)") {
-                    kindsLogo = "<img class=\"hardLogo\" src=\"./image/logo/ns-logo.png\">";
+                    kindsLogo = "<img class=\"hardLogo\" src=\"./image/logo/ns-logo.webp\">";
                 } else if (data[i].game_kinds == "(PS4)") {
-                    kindsLogo = "<img class=\"hardLogo\" src=\"./image/logo/ps-logo.png\">";
+                    kindsLogo = "<img class=\"hardLogo\" src=\"./image/logo/ps-logo.webp\">";
                 } else if (data[i].game_kinds == "(XBO)") {
                     kindsLogo = "<img class=\"hardLogo\" src=\"./image/logo/xbox-logo.svg\">";
                 }
                 let youtubeTag = "data-video-id=\"" + data[i].game_youtube + "\"";
                 let imageSrc = "./image/game/" + data[i].game_image + ".webp";
-                let imageTag = "<img class=\"cardImage jsModalVideo\" src=\"" + imageSrc + "\" title=\"" + data[i].game_name + "\" onerror=\"this.onerror = null; this.src='https://placehold.jp/300x180.png';\" loading=\"lazy\">" + kindsLogo;
+                let imageTag = "<img class=\"cardImage jsModalVideo\" src=\"" + imageSrc + "\" title=\"" + data[i].game_name + "\" onerror=\"this.onerror = null; this.src='https://placehold.jp/300x180.png';\">" + kindsLogo;
                 let ImageLinkTag = "<a href=\"" + data[i].game_url + "\" target=\"_blank\" rel=\"noopener noreferrer\">" + imageTag + "</a>";
                 let aTag = "<a href=\"" + data[i].game_url + "\" target=\"_blank\" rel=\"noopener noreferrer\">" + data[i].game_name + "</a>";
                 let titleLinkTag = "<p class=\"cardTitle\">" + aTag + "</p>";
@@ -72,6 +72,7 @@ function fileCheck(filePath) {
     return filepath.exists
 }
 
+/*
 function setYoutube() {
     if ($(".jsModalVideo").length) {
         $(".jsModalVideo").modalVideo({
@@ -82,4 +83,4 @@ function setYoutube() {
             },
         });
     }
-}
+}*/
