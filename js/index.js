@@ -51,7 +51,7 @@ function setCard(year, month, flag) {
                     kindsLogo = "<img class=\"hardLogo\" src=\"./image/logo/xbox-logo.svg\">";
                 }
                 let youtubeTag = "data-video-id=\"" + data[i].game_youtube + "\"";
-                let imageSrc = "./image/game/" + data[i].game_image + ".png";
+                let imageSrc = "./image/game/" + data[i].game_image + ".webp";
                 let imageTag = "<img class=\"cardImage jsModalVideo\" src=\"" + imageSrc + "\" title=\"" + data[i].game_name + "\" onerror=\"this.onerror = null; this.src='https://placehold.jp/300x180.png';\" loading=\"lazy\">" + kindsLogo;
                 let ImageLinkTag = "<a href=\"" + data[i].game_url + "\" target=\"_blank\" rel=\"noopener noreferrer\">" + imageTag + "</a>";
                 let aTag = "<a href=\"" + data[i].game_url + "\" target=\"_blank\" rel=\"noopener noreferrer\">" + data[i].game_name + "</a>";

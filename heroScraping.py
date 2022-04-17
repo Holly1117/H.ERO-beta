@@ -12,7 +12,8 @@ CONTEXT_URL = 'https://erogamescape.dyndns.org/~ap2/ero/toukei_kaiseki/before_ha
 
 DETAIL_URL = 'https://erogamescape.dyndns.org/~ap2/ero/toukei_kaiseki/'
 
-REQUEST_HTML = requests.get(CONTEXT_URL).text.replace('\n', '').replace('\t', '').replace(' ', '')
+REQUEST_HTML = requests.get(CONTEXT_URL).text.replace(
+    '\n', '').replace('\t', '').replace(' ', '')
 
 KINDS_NAME = ['(PS4)', '(PS5)', '(NS)', '(XBO)']
 
@@ -57,8 +58,6 @@ DETAIL_LIST = []
 BRAND_DETAIL_LIST = []
 
 
-
-
 def get_title():
     result_html = re.findall(TITLE_PATTERN, REQUEST_HTML)
     for title in result_html:
@@ -85,7 +84,8 @@ def get_brand():
 
 def get_detail():
     for detail in DETAIL_LIST:
-        requests_html = requests.get(DETAIL_URL + detail).text.replace('\n', '').replace('\t', '').replace(' ', '')
+        requests_html = requests.get(
+            DETAIL_URL + detail).text.replace('\n', '').replace('\t', '').replace(' ', '')
         result_html = re.findall(DETAIL_PATTERN, requests_html)
         for result in result_html:
             IMAGE_LIST.append(get_image(requests_html))
@@ -104,7 +104,8 @@ def get_image(requests_html):
 
 def get_brand_url():
     for brand in BRAND_DETAIL_LIST:
-        requests_html = requests.get(DETAIL_URL + brand).text.replace('\n', '').replace('\t', '').replace(' ', '')
+        requests_html = requests.get(
+            DETAIL_URL + brand).text.replace('\n', '').replace('\t', '').replace(' ', '')
         result_html = re.findall(BRAND_URL_PATTERN, requests_html)
         if len(result_html) != 0:
             BRAND_URL_LIST.append(result_html[0])
@@ -156,13 +157,13 @@ def parse_json(info_jsons, path):
 #parse_json(CALENDAR_LIST, CALENDAR_FILE_PATH)
 
 
-#JSONファイルの読み込み
-js_r=open('./json/hero.json','r',encoding="utf-8_sig")
-j_data=json.load(js_r )#データを取り出して、変数に入れています。
+# JSONファイルの読み込み
+js_r = open('./json/hero.json', 'r', encoding="utf-8_sig")
+j_data = json.load(js_r)  # データを取り出して、変数に入れています。
 print(j_data)
 js_r.close()
-#辞書型データの追加
-j_add={'1001':'True','1002':'True','1003':'False'}
+# 辞書型データの追加
+j_add = {'1001': 'True', '1002': 'True', '1003': 'False'}
 j_data.append(j_add)
 codecs_open = codecs.open('./json/hero.json', 'w', 'utf-8')
 json.dump(j_data, codecs_open, ensure_ascii=False, indent=2)
