@@ -14,7 +14,7 @@ CONTEXT_URL = 'https://erogamescape.dyndns.org/~ap2/ero/toukei_kaiseki/before_ha
 
 DETAIL_URL = 'https://erogamescape.dyndns.org/~ap2/ero/toukei_kaiseki/'
 
-REQUEST_HTML = requests.get(CONTEXT_URL).text.replace('\n', '').replace('\t', '').replace(' ', '')
+REQUEST_HTML = None
 
 KINDS_NAME = ['(PS4)', '(PS5)', '(NS)', '(XBO)']
 
@@ -60,6 +60,7 @@ BRAND_DETAIL_LIST = []
 
 
 def get_title():
+    REQUEST_HTML = requests.get(CONTEXT_URL).text.replace('\n', '').replace('\t', '').replace(' ', '')
     result_html = re.findall(TITLE_PATTERN, REQUEST_HTML)
     for title in result_html:
         DETAIL_LIST.append(title[0])
@@ -78,6 +79,7 @@ def get_kinds(kinds_list):
 
 
 def get_brand():
+    REQUEST_HTML = requests.get(CONTEXT_URL).text.replace('\n', '').replace('\t', '').replace(' ', '')
     result_html = re.findall(BRAND_PATTERN, REQUEST_HTML)
     for brand in result_html:
         BRAND_LIST.append(brand)
@@ -187,7 +189,7 @@ def get_new_hero_list(new_hero_list, path):
         parse_json(old_hero_list, path)
         new_index = len(old_hero_list)
         update_index = new_index - old_index
-        webHook.post_requests(True, update_index, '')
+        webHook.post_requests(True, str(update_index), '')
     except Exception:
         e = traceback.format_exc()
         webHook.post_requests(False, str(0), e)
