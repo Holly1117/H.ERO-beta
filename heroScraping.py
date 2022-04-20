@@ -10,7 +10,7 @@ HERO_FILE_PATH = './json/hero.json'
 
 CALENDAR_FILE_PATH = './json/calendar.json'
 
-CONTEXT_URL = 'https://erogamescape.dyndns.org/~ap2/ero/toukei_kaiseki/before_hatubai_yotei.php?erogame=&model='
+CONTEXT_URL = 'https://erogamescape.dyndns.org/~ap2/ero/toukei_kaiseki/before_hatubai_yotei.php'
 
 DETAIL_URL = 'https://erogamescape.dyndns.org/~ap2/ero/toukei_kaiseki/'
 
@@ -60,7 +60,7 @@ BRAND_DETAIL_LIST = []
 
 
 def get_title():
-    html = requests.get(CONTEXT_URL).text
+    html = requests.get(CONTEXT_URL,timeout=10).text
     html = html.replace('\n', '').replace('\t', '').replace(' ', '')
     result_html = re.findall(TITLE_PATTERN, html)
     for title in result_html:
@@ -80,7 +80,7 @@ def get_kinds(kinds_list):
 
 
 def get_brand():
-    html = requests.get(CONTEXT_URL).text
+    html = requests.get(CONTEXT_URL,timeout=10).text
     html = html.replace('\n', '').replace('\t', '').replace(' ', '')
     result_html = re.findall(BRAND_PATTERN, html)
     for brand in result_html:
