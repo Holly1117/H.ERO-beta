@@ -3,6 +3,8 @@ import requests
 import re
 import json
 import codecs
+import webHook
+import traceback
 
 HERO_FILE_PATH = './json/hero.json'
 
@@ -141,6 +143,24 @@ def set_hero():
     return HERO_LIST
 
 
+def get_hero():
+    js_rerd_data = open('./json/hero.json', 'r', encoding="utf-8_sig")
+    hero_data = json.load(js_rerd_data)
+    return hero_data
+
+
+def get_image_name(hero_list):
+    image_name = IMAGE_NAME + str(len(hero_list))
+    return image_name
+
+
+def get_unfinished_list(old_hero_list, new_hero):
+    for old_hero in old_hero_list:
+        if (new_hero["game_name"] == old_hero["game_name"]) and (new_hero["game_kinds"] == old_hero["game_kinds"]):
+            return False
+    return True
+
+
 def set_calendar(year, month):
     CALENDAR_LIST.append({
         "date_year": year,
@@ -153,18 +173,26 @@ def parse_json(info_jsons, path):
     json.dump(info_jsons, codecs_open, ensure_ascii=False, indent=2)
     codecs_open.close()
 
-#parse_json(set_hero(), HERO_FILE_PATH)
-#parse_json(CALENDAR_LIST, CALENDAR_FILE_PATH)
+
+def get_new_hero_list(new_hero_list, path):
+    try:
+        js_r = open(path, 'r', encoding="utf-8_sig")
+        info_jsons = json.load(js_r)
+        old_index = len(info_jsons)
+        old_hero_list = info_jsons
+        for new_hero in new_hero_list:
+            if get_unfinished_list(old_hero_list, new_hero):
+                new_hero["game_image"] = get_image_name(old_hero_list)
+                old_hero_list.append(new_hero)
+        old_hero_list = sorted(old_hero_list, key=lambda x: x['game_date'])
+        parse_json(old_hero_list, path)
+        new_index = len(old_hero_list)
+        update_index = new_index - old_index
+        webHook.post_requests(True, update_index, '')
+    except Exception:
+        e = traceback.format_exc()
+        webHook.post_requests(False, str(0), e)
 
 
-# JSONファイルの読み込み
-js_r = open('./json/hero.json', 'r', encoding="utf-8_sig")
-j_data = json.load(js_r)  # データを取り出して、変数に入れています。
-print(j_data)
-js_r.close()
-# 辞書型データの追加
-j_add = {'1001': 'True', '1002': 'True', '1003': 'False'}
-j_data.append(j_add)
-codecs_open = codecs.open('./json/hero.json', 'w', 'utf-8')
-json.dump(j_data, codecs_open, ensure_ascii=False, indent=2)
-codecs_open.close()
+get_new_hero_list(set_hero(), HERO_FILE_PATH)
+parse_json(CALENDAR_LIST, CALENDAR_FILE_PATH)

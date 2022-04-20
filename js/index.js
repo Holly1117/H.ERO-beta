@@ -17,8 +17,9 @@ function setMenu() {
             let setCardEventMethod = "setCardEvent(" + dataList[i].date_year + "," + dataList[i].date_month + ")";
             let inputId = "menu" + date_yyyy_mm;
             let menuName = dataList[i].date_year + "年" + dataList[i].date_month + "月";
-            calendarMenuTag.push("<input onclick=\"" + setCardEventMethod + "\" id=\"" + inputId + "\" class=\"radioInput filter\" type=\"radio\" name=\"calendarRadio\"/>");
-            calendarMenuTag.push("<label class=\"radioLabel\" for=\"" + inputId + "\">" + menuName + "</label>");
+            let inputTag = "<input onclick=\"" + setCardEventMethod + "\" id=\"" + inputId + "\" class=\"radioInput filter\" type=\"radio\" name=\"calendarRadio\"/>";
+            let labelTag = "<label class=\"radioLabel\" for=\"" + inputId + "\">" + menuName + "</label>";
+            calendarMenuTag.push(inputTag + labelTag);
         }
         $calendar[0].innerHTML = calendarMenuTag.join("");
         $("#menuAll").on("click", () => {
@@ -52,7 +53,8 @@ function setCard(year, month, flag) {
                 }
                 let youtubeTag = "data-video-id=\"" + data[i].game_youtube + "\"";
                 let imageSrc = "./image/game/" + data[i].game_image + ".webp";
-                let imageTag = "<img class=\"cardImage jsModalVideo\" src=\"" + imageSrc + "\" title=\"" + data[i].game_name + "\" onerror=\"this.onerror = null; this.src='https://placehold.jp/300x180.png';\">" + kindsLogo;
+                let undefined = "./image/game/undefined.webp";
+                let imageTag = "<img class=\"cardImage jsModalVideo\" src=\"" + imageSrc + "\" title=\"" + data[i].game_name + "\" onerror=\"this.onerror = null; this.src='" + undefined + "';\">" + kindsLogo;
                 let ImageLinkTag = "<a href=\"" + data[i].game_url + "\" target=\"_blank\" rel=\"noopener noreferrer\">" + imageTag + "</a>";
                 let aTag = "<a href=\"" + data[i].game_url + "\" target=\"_blank\" rel=\"noopener noreferrer\">" + data[i].game_name + "</a>";
                 let titleLinkTag = "<p class=\"cardTitle\">" + aTag + "</p>";
@@ -62,7 +64,6 @@ function setCard(year, month, flag) {
                 cardListTag.push("<div class=\"cardItem\">" + ImageLinkTag + titleLinkTag + contentAreaTag + "</div>");
             }
         }
-
         $carList[0].innerHTML = cardListTag.join("");
     });
 }
