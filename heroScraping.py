@@ -14,8 +14,7 @@ CONTEXT_URL = 'https://erogamescape.dyndns.org/~ap2/ero/toukei_kaiseki/before_ha
 
 DETAIL_URL = 'https://erogamescape.dyndns.org/~ap2/ero/toukei_kaiseki/'
 
-REQUEST_HTML = requests.get(CONTEXT_URL).text.replace(
-    '\n', '').replace('\t', '').replace(' ', '')
+REQUEST_HTML = requests.get(CONTEXT_URL).text.replace('\n', '').replace('\t', '').replace(' ', '')
 
 KINDS_NAME = ['(PS4)', '(PS5)', '(NS)', '(XBO)']
 
