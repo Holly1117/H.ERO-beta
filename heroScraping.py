@@ -60,8 +60,9 @@ BRAND_DETAIL_LIST = []
 
 
 def get_title():
-    REQUEST_HTML = requests.get(CONTEXT_URL).text.replace('\n', '').replace('\t', '').replace(' ', '')
-    result_html = re.findall(TITLE_PATTERN, REQUEST_HTML)
+    html = requests.get(CONTEXT_URL).text
+    html = html.replace('\n', '').replace('\t', '').replace(' ', '')
+    result_html = re.findall(TITLE_PATTERN, html)
     for title in result_html:
         DETAIL_LIST.append(title[0])
         TITLE_LIST.append(title[1])
@@ -79,8 +80,9 @@ def get_kinds(kinds_list):
 
 
 def get_brand():
-    REQUEST_HTML = requests.get(CONTEXT_URL).text.replace('\n', '').replace('\t', '').replace(' ', '')
-    result_html = re.findall(BRAND_PATTERN, REQUEST_HTML)
+    html = requests.get(CONTEXT_URL).text
+    html = html.replace('\n', '').replace('\t', '').replace(' ', '')
+    result_html = re.findall(BRAND_PATTERN, html)
     for brand in result_html:
         BRAND_LIST.append(brand)
 
